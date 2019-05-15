@@ -1,8 +1,8 @@
-const Hapi = require('@hapi/hapi')
+import Hapi from '@hapi/hapi'
 
 const init = async () => {
-  const server = new Hapi.server({
-    port: ~~process.env.PORT || 3000,
+  const server = new Hapi.Server({
+    port: parseInt(process.env.PORT || '3000'),
     host: process.env.HOST,
   })
 
