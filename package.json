@@ -15,5 +15,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/pedroteosousa/dena/issues"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^18.3.1"
   }
 }
