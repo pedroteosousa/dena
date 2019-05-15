@@ -1,0 +1,19 @@
+{
+  "name": "dena",
+  "version": "0.1.0",
+  "description": "A task manager",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedroteosousa/dena.git"
+  },
+  "keywords": [],
+  "author": "Pedro Sousa <pedroteosousa@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pedroteosousa/dena/issues"
+  }
+}
