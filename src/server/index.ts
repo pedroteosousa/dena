@@ -1,4 +1,6 @@
 import Hapi from '@hapi/hapi'
+import hapi_inert_pluggin from '@hapi/inert'
+import path from 'path'
 
 const init = async () => {
   const server = new Hapi.Server({
@@ -6,11 +8,17 @@ const init = async () => {
     host: process.env.HOST,
   })
 
+  await server.register(hapi_inert_pluggin)
+
   server.route({
     method: 'GET',
-    path: '/',
-    handler: () => {
-      return 'Hello World!'
+    path: '/{path*}',
+    handler: {
+      directory: {
+        path: path.join(__dirname, '../../lib/client'),
+        listing: true,
+        index: true,
+      },
     },
   })
 
