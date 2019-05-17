@@ -2,6 +2,9 @@ import Hapi from '@hapi/hapi'
 import hapi_inert_pluggin from '@hapi/inert'
 import path from 'path'
 
+import dotenv from 'dotenv'
+dotenv.config()
+
 const init = async () => {
   const server = new Hapi.Server({
     port: parseInt(process.env.PORT || '3000'),
