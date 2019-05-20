@@ -7,7 +7,10 @@
     "start": "npm run build-client && npm run build-server && npm run server",
     "build-server": "babel ./src/server --out-dir lib/server --extensions '.ts'",
     "server": "node lib/server/index.js",
-    "build-client": "webpack --color --progress"
+    "build-client": "webpack --color --progress",
+    "lint": "tslint -p ./",
+    "prettier": "prettier --list-different '*'",
+    "test": "npm run lint && npm run prettier"
   },
   "repository": {
     "type": "git",
