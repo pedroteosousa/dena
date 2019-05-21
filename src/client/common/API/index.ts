@@ -1,11 +1,13 @@
-import axios from 'axios'
+import axios, { AxiosPromise } from 'axios'
 
 const URL = process.env.URL
 
 interface AuthResponse {
-  user: string
+  id: string
 }
 
 export const auth = (payload: any) => {
   return axios.post<AuthResponse>(`${URL}/auth`, payload)
 }
+
+export type AuthPromise = AxiosPromise<AuthResponse>
