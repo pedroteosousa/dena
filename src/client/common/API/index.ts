@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-const PORT = process.env.PORT
-const URL = process.env.URL + (PORT ? `:${PORT}` : '')
+const URL = process.env.URL
 
 interface AuthResponse {
   user: string
