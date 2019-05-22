@@ -16,7 +16,7 @@ const route: ServerRoute = {
   handler: async (request, reply) => {
     const requestPayload = request.payload
     if (typeof requestPayload !== 'object') {
-      throw reply.response('Invalid payload format').code(400)
+      return reply.response('Invalid payload format').code(400)
     }
     if (!('token' in requestPayload)) {
       return reply.response('No token in payload').code(400)
