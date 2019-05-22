@@ -5,15 +5,17 @@ import {
   GoogleLoginResponseOffline,
   GoogleLogout,
 } from 'react-google-login'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { auth } from '../common/API'
+import { Dispatch, State } from '../store'
+import { login, LOGIN_FAILED, logout } from '../store/user/actions'
 
-const onSuccess = (onLogin: (user: string) => void) => (
+const onSuccess = (dispatch: Dispatch) => (
   response: GoogleLoginResponse | GoogleLoginResponseOffline,
 ) => {
   if (!('code' in response)) {
     const token = response.getAuthResponse().id_token
-    auth(token).then(({ data: { id } }) => onLogin(id))
+    dispatch(login(token))
   }
 }
 
@@ -23,26 +25,25 @@ if (!process.env.CLIENT_ID) {
 
 const clientId = process.env.CLIENT_ID
 
-interface AuthButtonProps {
-  loggedIn: boolean
-  onLogin: (user: string) => void
-  onLogout: () => void
-  onFailure: (error: Error) => void
-}
+const AuthButton: React.SFC = () => {
+  const dispatch = useDispatch<Dispatch>()
+  const isLoggedIn = useSelector<State, boolean>(state => state.user !== null)
 
-const AuthButton: React.SFC<AuthButtonProps> = ({
-  loggedIn,
-  onFailure,
-  onLogin,
-  onLogout,
-}) => {
-  return loggedIn ? (
-    <GoogleLogout clientId={clientId} onLogoutSuccess={onLogout} />
+  return isLoggedIn ? (
+    <GoogleLogout
+      clientId={clientId}
+      onLogoutSuccess={() => dispatch(logout())}
+    />
   ) : (
     <GoogleLogin
       clientId={clientId}
-      onSuccess={onSuccess(onLogin)}
-      onFailure={onFailure}
+      onSuccess={onSuccess(dispatch)}
+      onFailure={(error: Error) =>
+        dispatch({
+          payload: error,
+          type: LOGIN_FAILED,
+        })
+      }
       cookiePolicy={'single_host_origin'}
     />
   )
