@@ -6,8 +6,8 @@ interface AuthResponse {
   id: string
 }
 
-export const auth = (payload: any) => {
-  return axios.post<AuthResponse>(`${URL}/auth`, payload)
+export const auth = (token: string) => {
+  return axios.post<AuthResponse>(`${URL}/auth`, { token })
 }
 
 export type AuthPromise = AxiosPromise<AuthResponse>

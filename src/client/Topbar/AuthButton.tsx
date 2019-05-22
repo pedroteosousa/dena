@@ -13,7 +13,7 @@ const onSuccess = (onLogin: (user: string) => void) => (
 ) => {
   if (!('code' in response)) {
     const token = response.getAuthResponse().id_token
-    auth({ token }).then(({ data: { user } }) => onLogin(user))
+    auth(token).then(({ data: { id } }) => onLogin(id))
   }
 }
 
