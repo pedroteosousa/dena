@@ -29,7 +29,6 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env.URL': JSON.stringify(process.env.URL),
-      'process.env.PORT': JSON.stringify(process.env.PORT),
       'process.env.CLIENT_ID': JSON.stringify(process.env.CLIENT_ID),
     }),
   ],
