@@ -1,15 +1,19 @@
+import CssBaseline from '@material-ui/core/CssBaseline'
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
-import AuthButton from './Topbar/AuthButton'
+import Topbar from './Topbar'
+
+const theme = createMuiTheme()
 
 const App: React.SFC = () => {
   const [user, setUser] = useState<string | null>(null)
 
   return (
-    <div>
-      <h1>{user}</h1>
-      <AuthButton
+    <MuiThemeProvider theme={theme}>
+      <CssBaseline />
+      <Topbar
         onLogin={setUser}
         onLogout={() => {
           setUser(null)
@@ -19,7 +23,8 @@ const App: React.SFC = () => {
         }}
         loggedIn={user !== null}
       />
-    </div>
+      <h1>{user}</h1>
+    </MuiThemeProvider>
   )
 }
 
