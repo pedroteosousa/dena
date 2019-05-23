@@ -7,22 +7,22 @@ dotenv.config()
 
 const init = async () => {
   const server = new Hapi.Server({
-    port: parseInt(process.env.PORT || '3000'),
     host: process.env.HOST,
+    port: parseInt(process.env.PORT || '3000', 10),
   })
 
   await server.register(hapi_inert_pluggin)
 
   server.route({
-    method: 'GET',
-    path: '/{path*}',
     handler: {
       directory: {
-        path: path.join(__dirname, '../../lib/client'),
-        listing: true,
         index: true,
+        listing: true,
+        path: path.join(__dirname, '../../lib/client'),
       },
     },
+    method: 'GET',
+    path: '/{path*}',
   })
 
   await server.start()
