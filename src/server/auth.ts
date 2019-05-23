@@ -32,7 +32,7 @@ const route: ServerRoute = {
     if (payload) {
       return reply
         .response({
-          user: payload.sub,
+          id: payload.sub,
         })
         .code(200)
     } else {

@@ -15,19 +15,7 @@ const useStyles = makeStyles({
   },
 })
 
-interface AuthProps {
-  loggedIn: boolean
-  onLogin: (user: string) => void
-  onLogout: () => void
-  onFailure: (error: Error) => void
-}
-
-const Topbar: React.SFC<AuthProps> = ({
-  loggedIn,
-  onFailure,
-  onLogin,
-  onLogout,
-}) => {
+const Topbar: React.SFC = () => {
   const classes = useStyles()
 
   return (
@@ -37,12 +25,7 @@ const Topbar: React.SFC<AuthProps> = ({
           <Typography variant="h6" color="inherit" className={classes.grow}>
             dena
           </Typography>
-          <AuthButton
-            loggedIn={loggedIn}
-            onFailure={onFailure}
-            onLogin={onLogin}
-            onLogout={onLogout}
-          />
+          <AuthButton />
         </Toolbar>
       </AppBar>
     </div>
