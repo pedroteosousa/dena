@@ -1,23 +1,43 @@
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
-import React from 'react'
+import {
+  createMuiTheme,
+  makeStyles,
+  MuiThemeProvider,
+} from '@material-ui/core/styles'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Provider, useSelector } from 'react-redux'
 
 import store, { State } from './store'
 
+import Content from './Content'
+import ResponsiveDrawer from './ResponsiveDrawer'
 import Topbar from './Topbar'
 
 const theme = createMuiTheme()
 
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+  },
+})
+
 const App: React.SFC = () => {
-  const user = useSelector<State, State['user']>(state => state.user)
+  const classes = useStyles()
+
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const toggleDrawer = () => {
+    setDrawerOpen(!drawerOpen)
+  }
 
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-      <Topbar />
-      <h1>{user && user.id}</h1>
+      <div className={classes.root}>
+        <Topbar toggleDrawer={toggleDrawer} />
+        <ResponsiveDrawer open={drawerOpen} toggleDrawer={toggleDrawer} />
+        <Content />
+      </div>
     </MuiThemeProvider>
   )
 }

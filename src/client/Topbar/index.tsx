@@ -1,34 +1,62 @@
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/styles'
+import {
+  AppBar,
+  IconButton,
+  Theme,
+  Toolbar,
+  Typography,
+} from '@material-ui/core'
+import MenuIcon from '@material-ui/icons/Menu'
+import { makeStyles, useTheme } from '@material-ui/styles'
 import React from 'react'
 
 import AuthButton from './AuthButton'
 
-const useStyles = makeStyles({
+import { DRAWER_WIDTH } from '../ResponsiveDrawer'
+
+const useStyles = makeStyles((theme: Theme) => ({
+  appBar: {
+    marginLeft: DRAWER_WIDTH,
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(100% - ${DRAWER_WIDTH}px)`,
+    },
+  },
   grow: {
     flexGrow: 1,
   },
-  root: {
-    flexGrow: 1,
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    },
   },
-})
+}))
 
-const Topbar: React.SFC = () => {
-  const classes = useStyles()
+interface TopbarProps {
+  toggleDrawer: () => void
+}
+
+const Topbar: React.SFC<TopbarProps> = ({ toggleDrawer }) => {
+  const theme = useTheme()
+  const classes = useStyles(theme)
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
-            dena
-          </Typography>
-          <AuthButton />
-        </Toolbar>
-      </AppBar>
-    </div>
+    <AppBar position="fixed" className={classes.appBar}>
+      <Toolbar>
+        <IconButton
+          color="inherit"
+          aria-label="Open drawer"
+          edge="start"
+          onClick={toggleDrawer}
+          className={classes.menuButton}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" color="inherit" className={classes.grow}>
+          dena
+        </Typography>
+        <AuthButton />
+      </Toolbar>
+    </AppBar>
   )
 }
 
