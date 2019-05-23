@@ -8,9 +8,10 @@
     "build-server": "babel ./src/server --out-dir lib/server --extensions '.ts'",
     "server": "node lib/server/index.js",
     "build-client": "webpack --color --progress",
+    "tsc": "tsc",
     "lint": "tslint -p ./",
     "prettier": "prettier --list-different '*'",
-    "test": "npm run lint && npm run prettier"
+    "test": "npm run tsc && npm run lint && npm run prettier"
   },
   "repository": {
     "type": "git",
