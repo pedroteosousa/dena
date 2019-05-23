@@ -1,5 +1,6 @@
-import { Button } from '@material-ui/core'
-import React from 'react'
+import { Button, IconButton, Menu, MenuItem } from '@material-ui/core'
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import React, { Fragment, useState } from 'react'
 import {
   GoogleLogin,
   GoogleLoginResponse,
@@ -30,16 +31,51 @@ const AuthButton: React.SFC = () => {
   const dispatch = useDispatch<Dispatch>()
   const isLoggedIn = useSelector<State, boolean>(state => state.user !== null)
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleMenuClose = () => {
+    setAnchorEl(null)
+  }
+  const menuOpen = Boolean(anchorEl)
+
   return isLoggedIn ? (
-    <GoogleLogout
-      render={props => (
-        <Button {...props} color="inherit">
-          Logout
-        </Button>
-      )}
-      clientId={clientId}
-      onLogoutSuccess={() => dispatch(logout())}
-    />
+    <Fragment>
+      <IconButton
+        edge="end"
+        aria-owns={menuOpen ? 'material-appbar' : undefined}
+        aria-haspopup="true"
+        onClick={handleMenuOpen}
+        color="inherit"
+      >
+        <AccountCircle />
+      </IconButton>
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={menuOpen}
+        onClose={handleMenuClose}
+      >
+        <GoogleLogout
+          render={props => (
+            <MenuItem
+              onClick={() => {
+                if (props) {
+                  props.onClick()
+                }
+                handleMenuClose()
+              }}
+            >
+              Logout
+            </MenuItem>
+          )}
+          clientId={clientId}
+          onLogoutSuccess={() => dispatch(logout())}
+        />
+      </Menu>
+    </Fragment>
   ) : (
     <GoogleLogin
       render={props => (
