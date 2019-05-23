@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core'
 import React from 'react'
 import {
   GoogleLogin,
@@ -31,11 +32,21 @@ const AuthButton: React.SFC = () => {
 
   return isLoggedIn ? (
     <GoogleLogout
+      render={props => (
+        <Button {...props} color="inherit">
+          Logout
+        </Button>
+      )}
       clientId={clientId}
       onLogoutSuccess={() => dispatch(logout())}
     />
   ) : (
     <GoogleLogin
+      render={props => (
+        <Button {...props} color="inherit">
+          Login
+        </Button>
+      )}
       clientId={clientId}
       onSuccess={onSuccess(dispatch)}
       onFailure={(error: Error) =>
